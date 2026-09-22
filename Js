@@ -1,0 +1,48 @@
+const studentForm = document.getElementById('studentForm');
+const studentList = document.getElementById('student-list');
+
+studentForm.addEventListener('submit', function (event) {
+
+event.preventDefault();
+
+const nameInput = document.getElementById('studentName');
+const programInput = document.getElementById('program');
+
+const studentName = nameInput.value.trim();
+const studentProgram = programInput.value.trim();
+
+if (studentName === '' || studentProgram === '') {
+    return;
+}
+
+const emptyMessage = studentList.querySelector('.empty-message');
+if (emptyMessage) {
+    emptyMessage.remove();
+}
+
+const card = document.createElement('div');
+card.classList.add('student-card');
+
+card.innerHTML = `
+    <h3>${studentName}</h3>
+    <p><strong>Program:</strong> ${studentProgram}</p>
+    <button type="button" class="btn-remove">Remove</button>
+`;
+
+const removeBtn = card.querySelector('.btn-remove');
+
+removeBtn.addEventListener('click', function () {
+    card.remove();
+
+    if (studentList.children.length === 0) {
+        studentList.innerHTML = `
+            <p class="empty-message">No students added yet.</p>
+        `;
+    }
+});
+
+studentList.appendChild(card);
+
+studentForm.reset();
+
+});
